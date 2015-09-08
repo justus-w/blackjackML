@@ -1,2 +1,2 @@
-import player
-import blackjack
+from player import *
+from blackjack import *

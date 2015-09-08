@@ -87,6 +87,17 @@ class DealerStrategy(Strategy):
         return False
 
 
+class LearningStrategy(Strategy):
+    def wants_to_hit(self, hands, dhand):
+        return False
+
+    def wants_to_split_hand(self, hands, dhand):
+        return False
+
+    def wants_to_double_down(self, hands, dhand):
+        return False
+        
+
 class Player(object):
     """ A Player. """
     def __init__(self, name, credit=0, strategy_class=OptimalStrategy):

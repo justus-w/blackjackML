@@ -121,26 +121,24 @@ class Table(object):
             self.dealer.add_cards(new_cards, mask)
         return self.dealer.hands[0]
 
-
     def play_a_game(self, game_id):
         self.reset()
+        #player make their games
         for p in self.players:
             p.bet()
             p.split_hand(self.dealer.hands[0])
             p.double_down(self.dealer.hands[0])
-
             while any(p.wants_cards(self.dealer.hands[0])):
                 # one new card for each hand player p wants to keep playing
                 mask = p.wants_cards(self.dealer.hands[0])
                 new_cards = self.deck.draw_cards(n_cards=sum(mask))
                 p.add_cards(new_cards, mask)
-
-            dhand = self.play_dealer()
-
+        #dealer makes his game
+        dhand = self.play_dealer()
+        #evaluate game
+        for p in self.players:
             information = self.evaluate_p_vs_d(p, dhand)
-
             p.process_information(information,game_id)
-
 
     def evaluate_p_vs_d(self, p, dhand):
         gains = [0] * len(p.hands)
@@ -188,13 +186,3 @@ class GameState(object):
 class Strategy(object):
     def __init__(self):
         self.table = {}
-
-
-
-
-
-
-
-
-
-
